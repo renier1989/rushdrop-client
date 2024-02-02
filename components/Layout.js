@@ -10,7 +10,7 @@ const Layout = ({ children }) => {
         <title>RushDrop - Next </title>
       </Head>
 
-      <div className=" min-h-screen bg-gray-100 font-Rubik" >
+      <div className=" min-h-screen bg-gray-100 font-Rubik bg-[url('/bg.svg')]" >
         <div className="container mx-auto">
           <Header />
           <main className="mt-20">{children}</main>

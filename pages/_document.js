@@ -17,7 +17,7 @@ export default function Document() {
           rel="stylesheet"
         />
       </Head>
-      <body>
+      <body className="bg-lines-bg">
         <Main />
         <NextScript />
       </body>

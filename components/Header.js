@@ -1,9 +1,10 @@
 import Image from "next/image";
+import Link from "next/link";
 
 const Header = () => {
   return (
     <header className="py-8 flex flex-col md:flex-row items-center justify-between">
-      <div className="flex items-center flex-col md:flex-row">
+      <Link href="/" className="flex items-center flex-col md:flex-row">
         <Image
           className="w-32 mb-8 md:mb-0 rotate-180"
           src="logo.svg"
@@ -15,13 +16,22 @@ const Header = () => {
           <span className="text-sky-800">Rush</span>
           <span className="text-rose-700">Drop</span>
         </div>
+      </Link>
+
+      <div className="pt-8 md:pt-0 flex flex-col md:flex-row gap-2 ">
+        <Link
+          className="bg-rose-600 text-white px-4 py-1 rounded-md uppercase font-bold"
+          href="/login"
+        >
+          Iniciar Sesion
+        </Link>
+        <Link
+          className="bg-sky-800 text-white px-4 py-1 rounded-md uppercase font-bold"
+          href="/registrate"
+        >
+          Registrate
+        </Link>
       </div>
-
-      <div className="pt-8 md:pt-0">
-      <button className="bg-rose-800 text-white">Iniciar Sesion</button>
-
-      </div>
-
     </header>
   );
 };

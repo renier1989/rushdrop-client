@@ -1,8 +1,11 @@
 import Layout from "@/components/Layout";
+import useAuth from "@/hooks/useAuth";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
 const Registrate = () => {
+  const { token, registrarUsuario } = useAuth();
+
   // validacion del formulario con Formik y Yup
   const formik = useFormik({
     initialValues: {
@@ -20,7 +23,7 @@ const Registrate = () => {
         .min(6, "Ingrese minimo 6 caracteres!"),
     }),
     onSubmit: (values) => {
-      console.log(values);
+      registrarUsuario(values);
     },
   });
   return (

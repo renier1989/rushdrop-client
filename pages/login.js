@@ -1,11 +1,26 @@
+import { Alerta } from "@/components/Alerta";
 import Layout from "@/components/Layout";
+import useAuth from "@/hooks/useAuth";
 import { useFormik } from "formik";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 import * as Yup from "yup";
 
+
 const Login = () => {
+
+  const {mensaje, autenticado ,iniciarSesion} = useAuth();
+  const router = useRouter();
+  useEffect(() => {
+    if(autenticado){
+        router.push('/');
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [autenticado])
+  
+
   const formik = useFormik({
     initialValues: {
-      
       email: "",
       password: "",
     },
@@ -17,7 +32,7 @@ const Login = () => {
         .required("El Password es Requerido!"),
     }),
     onSubmit: (values) => {
-      console.log(values);
+      iniciarSesion(values);
     },
   });
   return <Layout>
@@ -25,6 +40,9 @@ const Login = () => {
     <h2 className="text-gray-900 font-bold text-center text-4xl">
       Iniciar Sesión
     </h2>
+
+  {mensaje && <Alerta/>}
+
     <div className="flex justify-center mt-5">
       <div className=" w-full max-w-lg">
         <form

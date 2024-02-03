@@ -1,10 +1,11 @@
+import { Alerta } from "@/components/Alerta";
 import Layout from "@/components/Layout";
 import useAuth from "@/hooks/useAuth";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
 const Registrate = () => {
-  const { token, registrarUsuario } = useAuth();
+  const { mensaje, registrarUsuario } = useAuth();
 
   // validacion del formulario con Formik y Yup
   const formik = useFormik({
@@ -28,10 +29,13 @@ const Registrate = () => {
   });
   return (
     <Layout>
-      <div className="md:w-4/5 lg:w-3/5 mx-auto mb-32">
+      <div className="md:w-4/5 xl:w-3/5 mx-auto mb-32">
         <h2 className="text-gray-900 font-bold text-center text-4xl">
           Registrate
         </h2>
+
+        {mensaje && <Alerta />}
+
         <div className="flex justify-center mt-5">
           <div className=" w-full max-w-lg">
             <form

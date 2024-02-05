@@ -3,10 +3,18 @@ import { useDropzone } from "react-dropzone";
 import React, { useCallback } from "react";
 import Image from "next/image";
 import clienteAxios from "@/config/axios";
+import useRushDrop from "@/hooks/useRushDrop";
 
 export const Dropzone = () => {
+
+    const {mostrarAlerta} = useRushDrop()
+
+    const onDropRejected = () =>{
+        mostrarAlerta('esto es el mensaje de la alerta');
+    }
+
   // funcion para manejar los archivos cargados.
-  const onDrop = useCallback(async (acceptedFiles) => {
+  const onDropAccepted = useCallback(async (acceptedFiles) => {
     // console.log(acceptedFiles);
 
     // creo un formdata para poder pasarle el archivo
@@ -20,7 +28,7 @@ export const Dropzone = () => {
 
   // estos hooks son del mismo dropzone , son para extraer el contenido del dropzone
   const { getRootProps, getInputProps, isDragActive, acceptedFiles } =
-    useDropzone({ onDrop });
+    useDropzone({ onDropAccepted, onDropRejected, maxSize: 1000000 });
 
   // muesto el archivo que se cargo
   const archivos = acceptedFiles.map((archivo) => (

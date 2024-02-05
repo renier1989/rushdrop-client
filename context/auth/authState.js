@@ -18,7 +18,7 @@ const AuthState = ({ children }) => {
   const initialState = {
     // esto es para que en caso que haya un token en el LS lo tome de alli pero solo del lado del cliente usando el typeof window
     token:
-      typeof window !== "undefined" ? localStorage.getItem("rd-token") : "",
+      typeof  window !== "undefined" ? localStorage.getItem("rd-token") : "",
     autenticado: null,
     usuario: null,
     mensaje: null,

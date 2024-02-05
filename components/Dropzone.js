@@ -6,7 +6,7 @@ import clienteAxios from "@/config/axios";
 import useRushDrop from "@/hooks/useRushDrop";
 
 export const Dropzone = () => {
-  const { mostrarAlerta, subirArchivo, subiendo } = useRushDrop();
+  const { mostrarAlerta, subirArchivo, subiendo,crearEnlace } = useRushDrop();
 
   const onDropRejected = () => {
     mostrarAlerta(
@@ -42,9 +42,7 @@ export const Dropzone = () => {
     </li>
   ));
 
-  const crearEnlace = () => {
-    console.log("crear...");
-  };
+  
 
   return (
     <div className="bg-[url('/folder-icon.svg')] md:flex-1 mb-3 mx-2 mt-16 lg:mt-10 flex flex-col items-center justify-center  border-dashed border-2 border-rose-200 rounded">
@@ -53,7 +51,7 @@ export const Dropzone = () => {
           <ul>{archivos}</ul>
 
           {subiendo ? (
-            <Image src="/loading.svg" alt="loading" width={110} height={10} />
+            <Image src="/loading.svg" alt="loading" width={100} height={100} />
           ) : (
             <button
               onClick={crearEnlace}

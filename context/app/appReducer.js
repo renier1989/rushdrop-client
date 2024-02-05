@@ -1,4 +1,4 @@
-import { LIMPIAR_ALERTAS, MOSTRAR_ALETAS, SUBIENDO_ARCHIVO, SUBIR_ARCHIVO_ERROR, SUBIR_ARCHIVO_EXITO } from "@/types";
+import { CREAR_ENLACE_ERROR, CREAR_ENLACE_EXITO, LIMPIAR_ALERTAS, MOSTRAR_ALETAS, SUBIENDO_ARCHIVO, SUBIR_ARCHIVO_ERROR, SUBIR_ARCHIVO_EXITO } from "@/types";
 
 const appReducer = (state, action) => {
   switch (action.type) {
@@ -32,6 +32,17 @@ const appReducer = (state, action) => {
         msg_archivo: action.payload,
         msg_archivo_error: true,
         subiendo:false
+      };
+    case CREAR_ENLACE_EXITO:
+      return {
+        ...state,
+        url: action.payload
+      };
+    case CREAR_ENLACE_ERROR:
+      return {
+        ...state,
+        msg_archivo: action.payload,
+        msg_archivo_error: true,
       };
 
     default:

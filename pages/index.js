@@ -3,8 +3,12 @@ import useAuth from "@/hooks/useAuth";
 import Link from "next/link";
 import { useEffect } from "react";
 import { Dropzone } from "@/components/Dropzone";
+import useRushDrop from "@/hooks/useRushDrop";
+import { Alerta } from "@/components/Alerta";
 const Home = () => {
   const { usuarioAutenticado } = useAuth();
+  const {msg_archivo} = useRushDrop()
+
 
   useEffect(() => {
     usuarioAutenticado();
@@ -14,6 +18,7 @@ const Home = () => {
   return (
     <Layout>
       <div className="md:w-4/5 xl:w-3/5 mx-auto mb-32">
+        {msg_archivo && <Alerta/>}
         <div className="lg:flex md:shadow-lg bg-white p-5 rounded-lg py-10">
           <Dropzone />
           <div className="md:flex-1 mb-3 mx-2 mt-16 lg:mt-10">

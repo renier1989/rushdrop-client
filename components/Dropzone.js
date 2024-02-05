@@ -10,7 +10,7 @@ export const Dropzone = () => {
     const {mostrarAlerta} = useRushDrop()
 
     const onDropRejected = () =>{
-        mostrarAlerta('esto es el mensaje de la alerta');
+        mostrarAlerta('No se pudo cargar el archivo. El limite es de 1MB, crea un cuenta para subir archivos con un peso mayor!');
     }
 
   // funcion para manejar los archivos cargados.

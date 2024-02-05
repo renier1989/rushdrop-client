@@ -6,24 +6,23 @@ import clienteAxios from "@/config/axios";
 import useRushDrop from "@/hooks/useRushDrop";
 
 export const Dropzone = () => {
+  const { mostrarAlerta, subirArchivo, subiendo } = useRushDrop();
 
-    const {mostrarAlerta} = useRushDrop()
-
-    const onDropRejected = () =>{
-        mostrarAlerta('No se pudo cargar el archivo. El limite es de 1MB, crea un cuenta para subir archivos con un peso mayor!');
-    }
+  const onDropRejected = () => {
+    mostrarAlerta(
+      "No se pudo cargar el archivo. El limite es de 1MB, crea un cuenta para subir archivos con un peso mayor!"
+    );
+  };
 
   // funcion para manejar los archivos cargados.
   const onDropAccepted = useCallback(async (acceptedFiles) => {
-    // console.log(acceptedFiles);
-
     // creo un formdata para poder pasarle el archivo
     const formData = new FormData();
     formData.append("archivo", acceptedFiles[0]); // solo le pasamos un archivo a la vez
+    const nombre_archivo = acceptedFiles[0].path;
+    subirArchivo(formData, nombre_archivo);
 
-    // aqui  la logica para cargar el archivo al server
-    const resultado = await clienteAxios.post("/api/archivos", formData);
-    console.log(resultado);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // estos hooks son del mismo dropzone , son para extraer el contenido del dropzone
@@ -43,20 +42,27 @@ export const Dropzone = () => {
     </li>
   ));
 
-  const crearEnlace = () =>{
-    console.log('crear...');
-  }
-
-
-
+  const crearEnlace = () => {
+    console.log("crear...");
+  };
 
   return (
     <div className="bg-[url('/folder-icon.svg')] md:flex-1 mb-3 mx-2 mt-16 lg:mt-10 flex flex-col items-center justify-center  border-dashed border-2 border-rose-200 rounded">
       {acceptedFiles.length > 0 ? (
         <div className="mt-5  w-full justify-center flex flex-col items-center gap-2">
-        <ul>{archivos}</ul>
+          <ul>{archivos}</ul>
 
-        <button onClick={crearEnlace} className="bg-sky-800 text-white px-4 py-1 rounded-md uppercase font-bold" type="button">Crear enlace</button>
+          {subiendo ? (
+            <Image src="/loading.svg" alt="loading" width={110} height={10} />
+          ) : (
+            <button
+              onClick={crearEnlace}
+              className="bg-sky-800 text-white px-4 py-1 rounded-md uppercase font-bold"
+              type="button"
+            >
+              Crear enlace
+            </button>
+          )}
         </div>
       ) : (
         <div

@@ -10,10 +10,10 @@ const Home = () => {
   const { msg_archivo, url } = useRushDrop();
 
   const [copiado, setCopiado] = useState(false);
-
+  const enlace = `${process.env.frontendURL}/enlaces/${url}`;
   const handleCopiado = () => {
     setCopiado(true);
-    navigator.clipboard.writeText(`${process.env.frontendURL}/${url}`);
+    navigator.clipboard.writeText(enlace);
   };
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const Home = () => {
             <span className="text-3xl font-bold text-sky-900">
               Tu enlace esta listo:
             </span>
-            <p className="text-xl text-gray-700">{`${process.env.frontendURL}/${url}`}</p>
+            <p className="text-xl text-gray-700">{enlace}</p>
             <button
               onClick={handleCopiado}
               className={`${

@@ -9,7 +9,7 @@ const Header = () => {
       <Link href="/" className="flex items-center flex-col md:flex-row">
         <Image
           className="w-32 mb-8 md:mb-0 rotate-180"
-          src="logo.svg"
+          src="/logo.svg"
           alt="logo"
           width={32}
           height={32}

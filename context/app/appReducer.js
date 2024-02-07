@@ -1,4 +1,6 @@
 import {
+  AGREGAR_DESCARGAS,
+  AGREGAR_PASSWORD,
   CREAR_ENLACE_ERROR,
   CREAR_ENLACE_EXITO,
   LIMPIAR_ALERTAS,
@@ -66,6 +68,17 @@ const appReducer = (state, action) => {
         autor: null,
         url: null,
       };
+
+      case AGREGAR_PASSWORD: 
+      return {
+        ...state,
+        password: action.payload
+      }
+      case AGREGAR_DESCARGAS: 
+      return {
+        ...state,
+        descargas: action.payload
+      }
 
     default:
       return state;

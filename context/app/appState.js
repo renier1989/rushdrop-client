@@ -1,4 +1,6 @@
 import {
+  AGREGAR_DESCARGAS,
+  AGREGAR_PASSWORD,
   CREAR_ENLACE_ERROR,
   CREAR_ENLACE_EXITO,
   LIMPIAR_ALERTAS,
@@ -23,7 +25,7 @@ const AppState = ({ children }) => {
     descargas: 1,
     password: "",
     autor: null,
-    url:null
+    url: null,
   };
 
   //   se crea el state y dispatch con el usereducer
@@ -92,13 +94,27 @@ const AppState = ({ children }) => {
       });
     }
   };
-  
+
   // funcion para limpiar el state y redireccionar a la vista de inicio
-  const limpiarState = () =>{
+  const limpiarState = () => {
     dispatch({
-      type: LIMPIAR_STATE
-    })
-  }
+      type: LIMPIAR_STATE,
+    });
+  };
+
+  const agregarPassword = (pass) => {
+    dispatch({
+      type: AGREGAR_PASSWORD,
+      payload: pass,
+    });
+  };
+
+  const agregarDescargas = (descargas) => {
+    dispatch({
+      type: AGREGAR_DESCARGAS,
+      payload: descargas,
+    });
+  };
 
   return (
     <appContext.Provider
@@ -116,6 +132,8 @@ const AppState = ({ children }) => {
         subirArchivo,
         crearEnlace,
         limpiarState,
+        agregarPassword,
+        agregarDescargas,
       }}
     >
       {children}

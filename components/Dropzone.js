@@ -4,9 +4,12 @@ import React, { useCallback } from "react";
 import Image from "next/image";
 import clienteAxios from "@/config/axios";
 import useRushDrop from "@/hooks/useRushDrop";
+import useAuth from "@/hooks/useAuth";
+import Formulario from "./Formulario";
 
 export const Dropzone = () => {
   const { mostrarAlerta, subirArchivo, subiendo,crearEnlace } = useRushDrop();
+  const { usuario , autenticado} = useAuth()
 
   const onDropRejected = () => {
     mostrarAlerta(
@@ -49,6 +52,9 @@ export const Dropzone = () => {
       {acceptedFiles.length > 0 ? (
         <div className="mt-5  w-full justify-center flex flex-col items-center gap-2">
           <ul>{archivos}</ul>
+
+        {usuario ? <Formulario/> : null}
+
 
           {subiendo ? (
             <Image src="/loading.svg" alt="loading" width={100} height={100} />

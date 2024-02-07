@@ -18,7 +18,7 @@ const AuthState = ({ children }) => {
   const initialState = {
     // esto es para que en caso que haya un token en el LS lo tome de alli pero solo del lado del cliente usando el typeof window
     token:
-      typeof  window !== "undefined" ? localStorage.getItem("rd-token") : "",
+      typeof window !== "undefined" ? localStorage.getItem("rd-token") : "",
     autenticado: null,
     usuario: null,
     mensaje: null,
@@ -75,29 +75,29 @@ const AuthState = ({ children }) => {
 
   //   obtener el usuario autenticado
   const usuarioAutenticado = async () => {
-    const token = localStorage.getItem('rd-token');
-    if(token ){
+    const token = localStorage.getItem("rd-token");
+    if (token) {
       tokenAuth(token);
     }
 
     try {
-      const respuesta = await clienteAxios.get('/api/auth');
+      const respuesta = await clienteAxios.get("/api/auth");
+      if (respuesta.data.usuario) {
         dispatch({
           type: USUARIO_AUTENTICADO,
           payload: respuesta.data.usuario,
         });
+      }
     } catch (error) {
       console.log(error);
     }
- 
   };
 
-
-  const cerrarSesion = () =>{
+  const cerrarSesion = () => {
     dispatch({
-          type: CERRAR_SESION,
-        });
-  }
+      type: CERRAR_SESION,
+    });
+  };
 
   return (
     <authContext.Provider
@@ -110,7 +110,7 @@ const AuthState = ({ children }) => {
         registrarUsuario,
         iniciarSesion,
         usuarioAutenticado,
-        cerrarSesion
+        cerrarSesion,
       }}
     >
       {children}

@@ -14,6 +14,7 @@ const authReducer = (state, action) => {
       return {
         ...state,
         usuario: action.payload,
+        autenticado: true,
       };
     case USUARIO_REGISTRO_EXITO:
       return {

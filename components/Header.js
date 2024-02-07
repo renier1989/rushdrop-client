@@ -1,12 +1,21 @@
 import useAuth from "@/hooks/useAuth";
+import useRushDrop from "@/hooks/useRushDrop";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const Header = () => {
   const { cerrarSesion, usuario } = useAuth();
+  const { limpiarState } = useRushDrop();
+  const router = useRouter()
+  const redireccionarHome  = () =>{
+    router.push('/');
+    limpiarState()
+  }
   return (
     <header className="py-8 flex flex-col md:flex-row items-center justify-between">
-      <Link href="/" className="flex items-center flex-col md:flex-row">
+      <a className="flex items-center flex-col md:flex-row cursor-pointer" 
+      onClick={()=>redireccionarHome()}>
         <Image
           className="w-32 mb-8 md:mb-0 rotate-180"
           src="/logo.svg"
@@ -18,7 +27,7 @@ const Header = () => {
           <span className="text-sky-800">Rush</span>
           <span className="text-rose-700">Drop</span>
         </div>
-      </Link>
+      </a>
 
       <div className="pt-8 md:pt-0 flex flex-col md:flex-row gap-2 ">
         {usuario ? (

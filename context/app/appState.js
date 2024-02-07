@@ -2,6 +2,7 @@ import {
   CREAR_ENLACE_ERROR,
   CREAR_ENLACE_EXITO,
   LIMPIAR_ALERTAS,
+  LIMPIAR_STATE,
   MOSTRAR_ALETAS,
   SUBIENDO_ARCHIVO,
   SUBIR_ARCHIVO_ERROR,
@@ -91,6 +92,13 @@ const AppState = ({ children }) => {
       });
     }
   };
+  
+  // funcion para limpiar el state y redireccionar a la vista de inicio
+  const limpiarState = () =>{
+    dispatch({
+      type: LIMPIAR_STATE
+    })
+  }
 
   return (
     <appContext.Provider
@@ -107,6 +115,7 @@ const AppState = ({ children }) => {
         mostrarAlerta,
         subirArchivo,
         crearEnlace,
+        limpiarState,
       }}
     >
       {children}

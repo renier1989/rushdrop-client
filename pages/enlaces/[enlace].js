@@ -5,15 +5,24 @@ import useRushDrop from "@/hooks/useRushDrop";
 import React, { useState } from "react";
 
 export async function getServerSideProps({ params }) {
-  // export async function getStaticProps({ params }) {
-  const { enlace } = params;
-  const respuesta = await clienteAxios.get(`/api/enlaces/${enlace}`);
+  try {
+    const { enlace } = params;
+    const respuesta = await clienteAxios.get(`/api/enlaces/${enlace}`);
+    return {
+      props: {
+        link: respuesta.data,
+      },
+    };
+  } catch (error) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/",
+      },
+    };
+  }
 
-  return {
-    props: {
-      link: respuesta.data,
-    },
-  };
+  // export async function getStaticProps({ params }) {
 }
 export async function getServerSidePaths() {
   // export async function getStaticPaths() {
@@ -47,6 +56,38 @@ const Enlace = ({ link }) => {
       mostrarAlerta(error.response.data.msg);
     }
   };
+
+  const handleDescarga = async () => {
+    try {
+      const respuesta = await clienteAxios.get(
+        `/api/archivos/${link.archivo}`,
+        { responseType: "blob" }
+      );
+
+      if(respuesta){
+        // Crear un objeto Blob con el contenido del archivo recibido
+        const blob = new Blob([respuesta.data], {
+          type: respuesta.headers["content-type"],
+        });
+        // Crear una URL para el Blob y crear un enlace de descarga
+        const url = window.URL.createObjectURL(blob);
+        // Crear un enlace <a> para descargar el archivo
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = link.archivo; // Nombre del archivo que se descargará
+        a.click();
+        // Liberar la URL creada
+        window.URL.revokeObjectURL(url);
+
+      }else{
+        mostrarAlerta('El archivo ya no se puede descargar.');
+      }
+
+    } catch (error) {
+      mostrarAlerta(error.response.data.msg);
+    }
+  };
+
   return (
     <Layout>
       {tienePassword ? (
@@ -97,9 +138,10 @@ const Enlace = ({ link }) => {
         <div className="text-center flex flex-col items-center justify-center font-bold text-sky-900 gap-8">
           <p className="text-4xl">Descarga tu archivo:</p>
           <a
-            href={`${process.env.backendURL}/api/archivos/${link.archivo}`}
+            // href={`${process.env.backendURL}/api/archivos/${link.archivo}`}
+            onClick={() => handleDescarga()}
             download
-            className="bg-rose-600 text-white px-4 text-2xl py-1 rounded-md uppercase font-bold hover:shadow-lg transition-all duration-300"
+            className="cursor-pointer bg-rose-600 text-white px-4 text-2xl py-1 rounded-md uppercase font-bold hover:shadow-lg transition-all duration-300"
           >
             Descargar
           </a>

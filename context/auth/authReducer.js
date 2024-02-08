@@ -1,6 +1,7 @@
 import {
     CERRAR_SESION,
   LIMPIAR_ALERTAS,
+  LISTA_ENLACES,
   LOGIN_ERROR,
   LOGIN_EXITO,
   USUARIO_AUTENTICADO,
@@ -54,6 +55,13 @@ const authReducer = (state, action) => {
         ...state,
         usuario: null,
         token: null,
+        autenticado: null,
+        enlaces: [],
+      };
+    case LISTA_ENLACES:
+      return {
+        ...state,
+        enlaces: action.payload,
       };
 
     default:

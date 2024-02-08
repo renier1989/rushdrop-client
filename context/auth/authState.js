@@ -4,6 +4,7 @@ import authReducer from "./authReducer";
 import {
   CERRAR_SESION,
   LIMPIAR_ALERTAS,
+  LISTA_ENLACES,
   LOGIN_ERROR,
   LOGIN_EXITO,
   USUARIO_AUTENTICADO,
@@ -23,6 +24,7 @@ const AuthState = ({ children }) => {
     usuario: null,
     mensaje: null,
     error: false,
+    enlaces: [],
   };
 
   // definir el reducer
@@ -82,11 +84,24 @@ const AuthState = ({ children }) => {
 
     try {
       const respuesta = await clienteAxios.get("/api/auth");
+      const enlaces = await clienteAxios.get('/api/lista-enlaces');
+      console.log('LOS ENLACES DEL USUARIO ::::: ',enlaces);
       if (respuesta.data.usuario) {
+        // se asingna el usuario autenticado al state.
         dispatch({
           type: USUARIO_AUTENTICADO,
           payload: respuesta.data.usuario,
         });
+
+        // si tiene enlaces el usuairo se asignan al state
+        if(enlaces){
+          dispatch({
+            type: LISTA_ENLACES,
+            payload: enlaces.data,
+          })
+        }
+
+        // si el usuario autenticado tiene enlaces creados se los asigno al state
       }
     } catch (error) {
       console.log(error);
@@ -107,6 +122,7 @@ const AuthState = ({ children }) => {
         usuario: state.usuario,
         mensaje: state.mensaje,
         error: state.error,
+        enlaces: state.enlaces,
         registrarUsuario,
         iniciarSesion,
         usuarioAutenticado,

@@ -30,7 +30,7 @@ export const Dropzone = () => {
 
   // estos hooks son del mismo dropzone , son para extraer el contenido del dropzone
   const { getRootProps, getInputProps, isDragActive, acceptedFiles } =
-    useDropzone({ onDropAccepted, onDropRejected, maxSize: 1000000 });
+    useDropzone({ onDropAccepted, onDropRejected, maxSize: autenticado ? 1024 * 1024 * 10 : 1024 * 1024 });
 
   // muesto el archivo que se cargo
   const archivos = acceptedFiles.map((archivo) => (

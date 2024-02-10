@@ -40,9 +40,22 @@ Clona el repositorio con (https):
 ```
 git clone https://github.com/renier1989/rushdrop-client.git 
 ```
-Cambia el nombre al archivo .env-example a .env y asegurate de contar con las variables de 
-move to the project folder and Run:
-```bash
+
+Debes modificar las variables de entonces que podrás encontrar en el archivo "next.config.js" y asignar las rutas de tus proyectos tanto del backend como del frontend, este paso es importante para poder permitir la correcta descarga y acceso a los archivos compartidos.
+
+Si harás un despliegue en algún servidor en la nube, no olvides ajustar estas rutas.
+
+```
+module.exports = {
+    env: {
+        backendURL: 'http://localhost:4000',
+        frontendURL: 'http://localhost:3000'
+    }
+}
+```
+
+
+```
   cd rushdrop-client
   npm install or npm i
   npm run dev

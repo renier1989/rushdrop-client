@@ -78,8 +78,8 @@ export const Dropzone = () => {
           <input className="h-100" {...getInputProps()} />
 
           {!isDragActive ? (
-            <div className=" text-center bg-sky-200/80 p-5 rounded cursor-pointer">
-              <p className=" text-xl   text-sky-800">
+            <div className=" text-center bg-rose-400/50 p-5 rounded cursor-pointer">
+              <p className=" text-xl   text-sky-800 font-semibold">
                 Selecciona o Arrastra un archivo aqui
               </p>
             </div>

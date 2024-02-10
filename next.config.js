@@ -1,6 +1,6 @@
 module.exports = {
     env: {
-        backendURL: 'http://localhost:4000',
-        frontendURL: 'http://localhost:3000'
+        backendURL: '3.81.20.62:4000',
+        frontendURL: 'https://rushdrop-client-renier1989.vercel.app'
     }
 }

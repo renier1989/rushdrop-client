@@ -2,6 +2,7 @@ import {
     CERRAR_SESION,
   LIMPIAR_ALERTAS,
   LISTA_ENLACES,
+  LISTA_ENLACES_ELIMINAR_EXITO,
   LOGIN_ERROR,
   LOGIN_EXITO,
   USUARIO_AUTENTICADO,
@@ -62,6 +63,11 @@ const authReducer = (state, action) => {
       return {
         ...state,
         enlaces: action.payload,
+      };
+    case LISTA_ENLACES_ELIMINAR_EXITO:
+      return {
+        ...state,
+        enlaces: state.enlaces.filter(enlace => enlace.url !== action.payload),
       };
 
     default:

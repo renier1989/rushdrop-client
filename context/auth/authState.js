@@ -5,6 +5,7 @@ import {
   CERRAR_SESION,
   LIMPIAR_ALERTAS,
   LISTA_ENLACES,
+  LISTA_ENLACES_ELIMINAR_EXITO,
   LOGIN_ERROR,
   LOGIN_EXITO,
   USUARIO_AUTENTICADO,
@@ -13,6 +14,7 @@ import {
 } from "@/types";
 import clienteAxios from "@/config/axios";
 import tokenAuth from "@/config/tokenAuth";
+import Swal from "sweetalert2"
 
 const AuthState = ({ children }) => {
   // definir un initialState
@@ -75,7 +77,7 @@ const AuthState = ({ children }) => {
     }, 3000);
   };
 
-  //   obtener el usuario autenticado
+  //   obtener el usuario autenticado y obtener los enlaces que ese usuario ha creado
   const usuarioAutenticado = async () => {
     const token = localStorage.getItem("rd-token");
     if (token) {
@@ -84,8 +86,8 @@ const AuthState = ({ children }) => {
 
     try {
       const respuesta = await clienteAxios.get("/api/auth");
-      const enlaces = await clienteAxios.get('/api/lista-enlaces');
-      console.log('LOS ENLACES DEL USUARIO ::::: ',enlaces);
+      const enlaces = await clienteAxios.get("/api/lista-enlaces");
+      
       if (respuesta.data.usuario) {
         // se asingna el usuario autenticado al state.
         dispatch({
@@ -94,11 +96,11 @@ const AuthState = ({ children }) => {
         });
 
         // si tiene enlaces el usuairo se asignan al state
-        if(enlaces){
+        if (enlaces) {
           dispatch({
             type: LISTA_ENLACES,
             payload: enlaces.data,
-          })
+          });
         }
 
         // si el usuario autenticado tiene enlaces creados se los asigno al state
@@ -114,6 +116,35 @@ const AuthState = ({ children }) => {
     });
   };
 
+  // funcion para eliminar los enlaces que un usuario ha creado
+  const eliminarEnlace = async (url) => {
+    try {
+      Swal.fire({
+        title: "Segur@ que desea eliminar este enlace?",
+        text: "No será posible revertir esta accion!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Si , Eliminar!"
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          const respuesta = await clienteAxios.post('/api/lista-enlaces/eliminar', {url});
+          if(respuesta.status === 200){
+            // ejecuto el dispatch para modificar el state en le reducer
+            dispatch({
+              type: LISTA_ENLACES_ELIMINAR_EXITO,
+              payload: url
+            })
+          }
+        }
+      });
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <authContext.Provider
       value={{
@@ -127,6 +158,7 @@ const AuthState = ({ children }) => {
         iniciarSesion,
         usuarioAutenticado,
         cerrarSesion,
+        eliminarEnlace,
       }}
     >
       {children}

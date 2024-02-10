@@ -37,7 +37,7 @@ const ListaEnlaces = () => {
               {enlaces.length > 0 ? (
                 <LlistaEnlacesTabla />
               ) : (
-                <p>No has creado enlaces</p>
+                <p className="text-center text-xl font-semibold">No has creado enlaces</p>
               )}
             </div>
           </div>
